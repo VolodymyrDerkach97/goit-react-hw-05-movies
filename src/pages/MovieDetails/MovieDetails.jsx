@@ -2,44 +2,66 @@ import BackLink from 'components/BackLink/BackLink';
 import { useEffect, useRef, useState } from 'react';
 import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
 import api from '../../services';
+import dateFormat from 'dateformat';
+import { WraperMovie } from './MovieDetails.styled';
+
 const MovieDetails = () => {
   const [movie, setMovie] = useState({});
+  const [errorMessage, setErrorMessage] = useState();
 
-  const movieId = useRef(useParams('movieId'));
+  const {
+    current: { movieId },
+  } = useRef(useParams('movieId'));
+
   const location = useLocation();
   const backLink = location.state?.from ?? '/';
 
   useEffect(() => {
-    const fetch = async () => {
-      const res = await api.fetchInfoMovie(movieId.current.movieId);
-      console.log(res);
-
-      setMovie(prev => ({ ...prev, ...res }));
+    const fetchData = async () => {
+      try {
+        const res = await api.fetchInfoMovie(movieId);
+        setMovie(res);
+      } catch (error) {
+        setErrorMessage(error.message);
+      }
     };
-    fetch();
+    fetchData();
   }, [movieId]);
 
-  const { original_title, release_date, overview, genres } = movie;
+  const { original_title, release_date, overview, genres, poster_path } = movie;
+
   return (
     <div>
       <BackLink to={backLink}>Go back</BackLink>
       <ul>
-        <div>
-          <img src="" alt="" />
-          <h2>
-            {original_title}({release_date})
-          </h2>
-          <h3>Overview</h3>
-          <p>{overview}</p>
-          <h3>Genres</h3>
-          <p>
+        <WraperMovie>
+          <img
+            src={
+              poster_path
+                ? `https://image.tmdb.org/t/p/original${poster_path}`
+                : ''
+            }
+            alt={`poster for the movie ${original_title}`}
+            width="200px"
+            height="300px"
+          />
+          <div>
+            {' '}
+            <h2>
+              {original_title}({dateFormat(release_date, 'yyyy')})
+            </h2>
+            <h3>Overview</h3>
+            <p>{overview}</p>
+            <h3>Genres</h3>
             <ul>
-              {genres.map(({ name }) => (
-                <li>{name}</li>
-              ))}
+              {genres ? (
+                genres.map(g => <li key={g.id}>{g.name}</li>)
+              ) : (
+                <li>Loading...</li>
+              )}
             </ul>
-          </p>
-        </div>
+          </div>
+        </WraperMovie>
         <li>
           <Link to="cast">Cast</Link>
         </li>
