@@ -10,8 +10,7 @@ const param = new URLSearchParams({
 
 const fetchPopularMovies = async () => {
   try {
-    const res = await axios.get(`trending/movie/week?${param}`);
-    // console.log(res);
+    const res = await axios.get(`trending/movie/day?${param}`);
     return res.data.results;
   } catch (error) {
     console.log(error.message);
@@ -21,7 +20,6 @@ const fetchPopularMovies = async () => {
 const fetchInfoMovie = async movie_id => {
   try {
     const res = await axios.get(`movie/${movie_id}?${param}`);
-
     return res.data;
   } catch (error) {
     console.log(error.message);
@@ -31,7 +29,6 @@ const fetchInfoMovie = async movie_id => {
 const fetchCastMovie = async movie_id => {
   try {
     const res = await axios.get(`movie/${movie_id}/credits?${param}`);
-    // console.log('fetchCastMovie', res);
     return res;
   } catch (error) {
     console.log(error.message);
@@ -47,11 +44,10 @@ const fetchReviewsMovie = async movie_id => {
     console.log(error.message);
   }
 };
-// 'https://api.themoviedb.org/3/search/movie?api_key=<<api_key>>&language=en-US&page=1&include_adult=false'
+
 const fetchSearchsMovie = async query => {
   try {
     const res = await axios.get(`search/movie?query=${query}&${param}`);
-    console.log('fetchSearchsMovie', res);
     return res;
   } catch (error) {
     console.log(error.message);
@@ -66,5 +62,3 @@ const api = {
 };
 
 export default api;
-
-// https://api.themoviedb.org/3/movie/{movie_id}

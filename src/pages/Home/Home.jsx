@@ -1,8 +1,13 @@
-import { Link, useLocation } from 'react-router-dom';
-import api from '../../services';
+import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+
+import api from '../../services';
+import HomeList from '../../components/HomeList';
+
 const Home = () => {
   const [movies, setMovies] = useState([]);
+
+  const location = useLocation();
 
   useEffect(() => {
     const fetch = async () => {
@@ -12,21 +17,7 @@ const Home = () => {
     fetch();
   }, []);
 
-  const location = useLocation();
-  return (
-    <>
-      <div>Home</div>
-      <ul>
-        {movies.map(({ id, original_title }) => (
-          <li key={id}>
-            <Link to={`movies/${id}`} state={{ from: location }}>
-              {original_title}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </>
-  );
+  return <HomeList movies={movies} location={location} />;
 };
 
 export default Home;

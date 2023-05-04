@@ -12,10 +12,10 @@ const Cast = () => {
     const fetchData = async () => {
       const res = await api.fetchCastMovie(movieId);
       setCastMovie(res.data.cast);
-      console.log(res.data.cast);
     };
     fetchData();
   }, [movieId]);
+
   return (
     <div>
       Cast

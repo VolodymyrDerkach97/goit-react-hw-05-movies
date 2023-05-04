@@ -28,7 +28,6 @@ const Review = () => {
               <p>{content}</p>
             </li>
           ))}
-          ?
         </ul>
       ) : (
         <div>Loading...</div>
