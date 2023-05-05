@@ -1,13 +1,27 @@
 {
   "files": {
     "main.css": "/goit-react-hw-05-movies/static/css/main.dde55057.css",
-    "main.js": "/goit-react-hw-05-movies/static/js/main.0a1cb72a.js",
+    "main.js": "/goit-react-hw-05-movies/static/js/main.becd3b39.js",
+    "static/js/184.846e6f30.chunk.js": "/goit-react-hw-05-movies/static/js/184.846e6f30.chunk.js",
+    "static/js/967.7a2aee17.chunk.js": "/goit-react-hw-05-movies/static/js/967.7a2aee17.chunk.js",
+    "static/js/491.fe473d3e.chunk.js": "/goit-react-hw-05-movies/static/js/491.fe473d3e.chunk.js",
+    "static/js/782.b1ab1cbe.chunk.js": "/goit-react-hw-05-movies/static/js/782.b1ab1cbe.chunk.js",
+    "static/js/961.0f52b08a.chunk.js": "/goit-react-hw-05-movies/static/js/961.0f52b08a.chunk.js",
+    "static/js/673.a1b3166d.chunk.js": "/goit-react-hw-05-movies/static/js/673.a1b3166d.chunk.js",
+    "static/js/937.dc4ee26c.chunk.js": "/goit-react-hw-05-movies/static/js/937.dc4ee26c.chunk.js",
     "index.html": "/goit-react-hw-05-movies/index.html",
     "main.dde55057.css.map": "/goit-react-hw-05-movies/static/css/main.dde55057.css.map",
-    "main.0a1cb72a.js.map": "/goit-react-hw-05-movies/static/js/main.0a1cb72a.js.map"
+    "main.becd3b39.js.map": "/goit-react-hw-05-movies/static/js/main.becd3b39.js.map",
+    "184.846e6f30.chunk.js.map": "/goit-react-hw-05-movies/static/js/184.846e6f30.chunk.js.map",
+    "967.7a2aee17.chunk.js.map": "/goit-react-hw-05-movies/static/js/967.7a2aee17.chunk.js.map",
+    "491.fe473d3e.chunk.js.map": "/goit-react-hw-05-movies/static/js/491.fe473d3e.chunk.js.map",
+    "782.b1ab1cbe.chunk.js.map": "/goit-react-hw-05-movies/static/js/782.b1ab1cbe.chunk.js.map",
+    "961.0f52b08a.chunk.js.map": "/goit-react-hw-05-movies/static/js/961.0f52b08a.chunk.js.map",
+    "673.a1b3166d.chunk.js.map": "/goit-react-hw-05-movies/static/js/673.a1b3166d.chunk.js.map",
+    "937.dc4ee26c.chunk.js.map": "/goit-react-hw-05-movies/static/js/937.dc4ee26c.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.dde55057.css",
-    "static/js/main.0a1cb72a.js"
+    "static/js/main.becd3b39.js"
   ]
 }
