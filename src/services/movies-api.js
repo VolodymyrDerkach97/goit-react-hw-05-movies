@@ -20,6 +20,7 @@ const fetchPopularMovies = async () => {
 const fetchInfoMovie = async movie_id => {
   try {
     const res = await axios.get(`movie/${movie_id}?${param}`);
+
     return res.data;
   } catch (error) {
     console.log(error.message);
@@ -38,7 +39,6 @@ const fetchCastMovie = async movie_id => {
 const fetchReviewsMovie = async movie_id => {
   try {
     const res = await axios.get(`movie/${movie_id}/reviews?${param}`);
-    console.log('fetchReviewsMovie', res);
     return res;
   } catch (error) {
     console.log(error.message);

@@ -1,18 +1,23 @@
-const SearchBox = ({ value, onChange, onSubmit }) => {
+import { useState } from 'react';
+import PropTypes from 'prop-types';
+
+const SearchBox = ({ onSubmit }) => {
+  const [query, setQuery] = useState('');
+
+  const onSubmitForm = e => {
+    e.preventDefault();
+    onSubmit(query);
+    setQuery('');
+  };
+
+  const handleChange = e => {
+    setQuery(e.target.value);
+  };
+
   return (
     <>
-      <form
-        onSubmit={e => {
-          e.preventDefault();
-          onSubmit();
-          console.log('submit');
-        }}
-      >
-        <input
-          type="text"
-          value={value}
-          onChange={e => onChange(e.target.value)}
-        />
+      <form onSubmit={onSubmitForm}>
+        <input type="text" value={query} onChange={handleChange} />
         <button>Search</button>
       </form>
       <div></div>
@@ -21,3 +26,7 @@ const SearchBox = ({ value, onChange, onSubmit }) => {
 };
 
 export default SearchBox;
+
+SearchBox.propTypes = {
+  onSubmit: PropTypes.func,
+};

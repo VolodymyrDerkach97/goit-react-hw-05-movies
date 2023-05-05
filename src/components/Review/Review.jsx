@@ -1,38 +1,52 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, lazy } from 'react';
 import { useParams } from 'react-router-dom';
 import api from '../../services';
+import Loading from '../Loading';
+// import Error from '../Error';
+import ReviewItem from '../ReviewItem';
+
+const Error = lazy(() => import('../Error'));
 
 const Review = () => {
   const [reviewMovie, setreviewMovie] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+
   const {
     current: { movieId },
   } = useRef(useParams('movieId'));
 
   useEffect(() => {
+    setIsLoading(true);
     const fetchData = async () => {
-      const res = await api.fetchReviewsMovie(movieId);
-      setreviewMovie(res.data.results);
+      try {
+        const res = await api.fetchReviewsMovie(movieId);
+        setreviewMovie(res.data.results);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setIsLoading(false);
+      }
     };
     fetchData();
   }, [movieId]);
 
-  console.log('reviewMovie-', reviewMovie);
   return (
     <div>
-      Review
-      {reviewMovie ? (
-        <ul>
-          {reviewMovie.map(({ id, author, content }) => (
-            <li key={id}>
-              <b> {author}</b>
-              <p>{content}</p>
-            </li>
-          ))}
-        </ul>
+      {error ? <Error message={error} /> : ''}
+      {isLoading ? (
+        <Loading />
       ) : (
-        <div>Loading...</div>
+        <ul>
+          {reviewMovie.length === 0 ? (
+            <li>We dont`t have any reviews for this movie.</li>
+          ) : (
+            reviewMovie.map(props => <ReviewItem key={props.id} {...props} />)
+          )}
+        </ul>
       )}
     </div>
   );
 };
+
 export default Review;

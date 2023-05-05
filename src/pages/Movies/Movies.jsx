@@ -1,58 +1,82 @@
 import { Outlet, useLocation, useSearchParams } from 'react-router-dom';
-import SearchBox from 'components/SearchBox';
-import MovieList from 'components/MovieList';
+import {
+  useEffect,
+  useRef,
+  useState,
+  useCallback,
+  lazy,
+  Suspense,
+} from 'react';
+
 import api from '../../services';
-import { useEffect, useRef, useState } from 'react';
+
+import Loading from '../../components/Loading';
+
+const Error = lazy(() => import('../../components/Error'));
+
+const SearchBox = lazy(() => import('components/SearchBox'));
+const MovieList = lazy(() => import('components/MovieList'));
 
 const Movies = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchMovies, setSearchMovies] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const searchQuery = searchParams.get('query') ?? '';
   const location = useLocation();
+  const firstLoadQuery = useRef(searchQuery);
+
+  const handleFetchMovies = useCallback(async query => {
+    setIsLoading(true);
+    try {
+      const res = await api.fetchSearchsMovie(query);
+      setSearchMovies(res.data.results);
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    setIsLoading(true);
+    if (firstLoadQuery.current === '') {
+      setIsLoading(false);
+      return;
+    }
+    if (firstLoadQuery.current === searchQuery) {
+      handleFetchMovies(firstLoadQuery.current);
+    }
+    setIsLoading(false);
+  }, [handleFetchMovies, searchQuery]);
+
   const updateQueryString = query => {
     const nextParams = query !== '' ? { query } : {};
     setSearchParams(nextParams);
   };
-  const firstLoadQuery = useRef(searchQuery);
 
-  useEffect(() => {
-    if (firstLoadQuery.current === '') {
+  const handleSubmit = query => {
+    if (query.trim() === '') {
+      console.log('заповни поле');
       return;
     }
-    if (firstLoadQuery.current === searchQuery) {
-      featchData();
-    }
-    async function featchData() {
-      try {
-        const res = await api.fetchSearchsMovie(firstLoadQuery.current);
-        console.log(res);
-        setSearchMovies(res.data.results);
-      } catch (error) {
-        console.log(error.message);
-      }
-    }
-  }, [searchQuery]);
-
-  const handleSubmit = async () => {
-    try {
-      const res = await api.fetchSearchsMovie(searchQuery);
-      setSearchMovies(res.data.results);
-    } catch (error) {
-      console.log(error.message);
-    }
+    updateQueryString(query);
+    handleFetchMovies(query);
   };
 
   return (
     <>
+      {error ? <Error message={error} /> : ''}
       <div>Movies</div>
-
-      <SearchBox
-        value={searchQuery}
-        onSubmit={handleSubmit}
-        onChange={updateQueryString}
-      />
-      <MovieList movies={searchMovies} location={location} />
+      <Suspense fallback={<Loading />}>
+        <SearchBox onSubmit={handleSubmit} />
+        <MovieList
+          isLoading={isLoading}
+          movies={searchMovies}
+          location={location}
+        />
+      </Suspense>
 
       <Outlet />
     </>
