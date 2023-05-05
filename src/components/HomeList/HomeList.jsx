@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import dateFormat from 'dateformat';
 
+import { StyledHomeItem } from './HomeList.styled';
 import Loading from '../Loading';
 
 const HomeList = ({ isLoading, movies, location }) => {
@@ -12,11 +13,11 @@ const HomeList = ({ isLoading, movies, location }) => {
       ) : (
         <ul>
           {movies.map(({ id, title, release_date }) => (
-            <li key={id}>
+            <StyledHomeItem key={id}>
               <Link to={`movies/${id}`} state={{ from: location }}>
                 {title}({dateFormat(release_date, 'yyyy')})
               </Link>
-            </li>
+            </StyledHomeItem>
           ))}
         </ul>
       )}
@@ -29,7 +30,7 @@ HomeList.propTypes = {
   movies: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
-      title: PropTypes.string,
+      original_title: PropTypes.string,
       release_date: PropTypes.string,
     })
   ),

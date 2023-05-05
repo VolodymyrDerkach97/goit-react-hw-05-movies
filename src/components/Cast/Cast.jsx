@@ -4,6 +4,8 @@ import api from '../../services';
 import Loading from '../Loading';
 import CastItem from '../CastItem';
 
+import { SryledCastList } from './Cast.styled';
+
 const Error = lazy(() => import('../../components/Error'));
 
 const Cast = () => {
@@ -36,13 +38,13 @@ const Cast = () => {
       {isLoading ? (
         <Loading />
       ) : (
-        <ul>
+        <SryledCastList>
           {castMovie.length === 0 ? (
             <li>We don't have a cast for this movie..</li>
           ) : (
             castMovie.map(props => <CastItem key={props.id} {...props} />)
           )}
-        </ul>
+        </SryledCastList>
       )}
     </div>
   );

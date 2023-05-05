@@ -68,7 +68,7 @@ const Movies = () => {
   return (
     <>
       {error ? <Error message={error} /> : ''}
-      <div>Movies</div>
+
       <Suspense fallback={<Loading />}>
         <SearchBox onSubmit={handleSubmit} />
         <MovieList

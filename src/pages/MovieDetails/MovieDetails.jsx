@@ -3,8 +3,21 @@ import { Outlet, useLocation, useParams } from 'react-router-dom';
 
 import api from '../../services';
 import dateFormat from 'dateformat';
+import { IoIosArrowRoundBack } from 'react-icons/io';
+import { IconContext } from 'react-icons';
 
-import { WraperMovie, StyledNavLink } from './MovieDetails.styled';
+import {
+  WraperMovie,
+  StyledNavLink,
+  StyledTitleMovie,
+  StyledUserScore,
+  StyledOverview,
+  StyledOverviewText,
+  StyledGenres,
+  StyledGenresList,
+  StyledAdditionalLink,
+  StyledAdditionalItem,
+} from './MovieDetails.styled';
 
 import BackLink from 'components/BackLink';
 import Loading from 'components/Loading';
@@ -38,12 +51,19 @@ const MovieDetails = () => {
     fetchData();
   }, [movieId]);
 
-  const { title, release_date, overview, genres, poster_path } = movie;
+  const { title, release_date, overview, genres, poster_path, vote_average } =
+    movie;
 
   return (
     <div>
-      <BackLink to={backLink.current}>Go back</BackLink>
+      <IconContext.Provider value={{ size: '25px' }}>
+        <BackLink to={backLink.current}>
+          {<IoIosArrowRoundBack />}Go back
+        </BackLink>
+      </IconContext.Provider>
+
       {error ? <Error message={error} /> : ''}
+
       {isLoading ? (
         <Loading />
       ) : (
@@ -56,35 +76,40 @@ const MovieDetails = () => {
                   : ''
               }
               alt={`poster for the movie ${title}`}
-              width="200px"
-              height="300px"
+              width="250px"
+              height="375px"
             />
             <div>
-              {' '}
-              <h2>
-                {title}({dateFormat(release_date, 'yyyy')})
-              </h2>
-              <h3>Overview</h3>
-              <p>{overview}</p>
-              <h3>Genres</h3>
-              <ul>
+              <StyledTitleMovie>
+                {title} ({dateFormat(release_date, 'yyyy')})
+              </StyledTitleMovie>
+              <StyledUserScore>
+                User score: {Math.round(vote_average * 10)}%
+              </StyledUserScore>
+              <StyledOverview>Overview</StyledOverview>
+              <StyledOverviewText>{overview}</StyledOverviewText>
+              <StyledGenres>Genres</StyledGenres>
+              <StyledGenresList>
                 {genres ? (
                   genres.map(g => <li key={g.id}>{g.name}</li>)
                 ) : (
                   <li>Not Genres</li>
                 )}
-              </ul>
+              </StyledGenresList>
             </div>
           </WraperMovie>
 
-          <ul>
-            <li>
+          <StyledAdditionalLink>
+            <StyledAdditionalItem>
+              <h4>Addinational information</h4>
+            </StyledAdditionalItem>
+            <StyledAdditionalItem>
               <StyledNavLink to="cast">Cast</StyledNavLink>
-            </li>
-            <li>
+            </StyledAdditionalItem>
+            <StyledAdditionalItem>
               <StyledNavLink to="review">Review</StyledNavLink>
-            </li>
-          </ul>
+            </StyledAdditionalItem>
+          </StyledAdditionalLink>
           <Outlet />
         </>
       )}

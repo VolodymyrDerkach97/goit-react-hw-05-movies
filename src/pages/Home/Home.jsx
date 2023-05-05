@@ -31,7 +31,7 @@ const Home = () => {
   return (
     <>
       {error ? <Error message={error} /> : ''}
-      <HomeList isLoading={isLoading} movies={movies} location={location} />;
+      <HomeList isLoading={isLoading} movies={movies} location={location} />
     </>
   );
 };

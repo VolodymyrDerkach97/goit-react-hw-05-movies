@@ -2,6 +2,7 @@ import { Link, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import dateFormat from 'dateformat';
 import Loading from '../Loading';
+import { StyledMovieItem } from './MovieList.styled';
 
 const MovieList = ({ isLoading, movies }) => {
   const location = useLocation();
@@ -13,11 +14,11 @@ const MovieList = ({ isLoading, movies }) => {
       ) : (
         <ul>
           {movies.map(({ id, title, release_date }) => (
-            <li key={id}>
+            <StyledMovieItem key={id}>
               <Link to={`${id}`} state={{ from: location }}>
                 {title}({dateFormat(release_date, 'yyyy')})
               </Link>
-            </li>
+            </StyledMovieItem>
           ))}
         </ul>
       )}

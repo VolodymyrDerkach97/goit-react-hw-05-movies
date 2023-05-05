@@ -2,8 +2,8 @@ import { useEffect, useState, useRef, lazy } from 'react';
 import { useParams } from 'react-router-dom';
 import api from '../../services';
 import Loading from '../Loading';
-// import Error from '../Error';
 import ReviewItem from '../ReviewItem';
+import { StyledReviewList } from './Review.styled';
 
 const Error = lazy(() => import('../Error'));
 
@@ -37,13 +37,13 @@ const Review = () => {
       {isLoading ? (
         <Loading />
       ) : (
-        <ul>
+        <StyledReviewList>
           {reviewMovie.length === 0 ? (
             <li>We dont`t have any reviews for this movie.</li>
           ) : (
             reviewMovie.map(props => <ReviewItem key={props.id} {...props} />)
           )}
-        </ul>
+        </StyledReviewList>
       )}
     </div>
   );

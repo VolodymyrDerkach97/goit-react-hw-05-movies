@@ -1,9 +1,6 @@
 import SharedLayout from 'components/SharedLayout/SharedLayout';
 import Home from 'pages/Home';
-// import Movies from 'pages/Movies';
-// import MovieDetails from 'pages/MovieDetails';
-// import Cast from '../Cast';
-// import Review from '../Review';
+
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { lazy } from 'react';
 

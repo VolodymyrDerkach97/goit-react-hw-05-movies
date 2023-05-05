@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
-
+import { SryledCastItem, SryledCastName } from './CastItem.styled';
 const CastItem = ({ name, profile_path }) => {
   return (
-    <li>
+    <SryledCastItem>
       <img
         src={
           profile_path
@@ -10,11 +10,11 @@ const CastItem = ({ name, profile_path }) => {
             : ''
         }
         alt={`actor ${name}`}
-        width="70px"
-        height="90px"
+        width="100px"
+        height="150"
       />
-      {name}
-    </li>
+      <SryledCastName>{name}</SryledCastName>
+    </SryledCastItem>
   );
 };
 export default CastItem;

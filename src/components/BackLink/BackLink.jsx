@@ -1,8 +1,8 @@
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { StyledHomeItem } from './BackLink.styled';
 
 const BackLink = ({ to, children }) => {
-  return <Link to={to}>{children}</Link>;
+  return <StyledHomeItem to={to}>{children}</StyledHomeItem>;
 };
 
 export default BackLink;
@@ -20,5 +20,5 @@ BackLink.propTypes = {
       search: PropTypes.string,
     }),
   }),
-  children: PropTypes.string,
+  children: PropTypes.array,
 };
