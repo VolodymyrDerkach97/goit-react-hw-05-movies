@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, lazy } from 'react';
+import { useEffect, useRef, useState, lazy, Suspense } from 'react';
 import { Outlet, useLocation, useParams } from 'react-router-dom';
 
 import api from '../../services';
@@ -110,7 +110,9 @@ const MovieDetails = () => {
               <StyledNavLink to="review">Review</StyledNavLink>
             </StyledAdditionalItem>
           </StyledAdditionalLink>
-          <Outlet />
+          <Suspense>
+            <Outlet />
+          </Suspense>
         </>
       )}
     </div>
